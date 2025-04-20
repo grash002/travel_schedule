@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
-        //station()
+        station()
         //search()
         //schedule()
         //thread()

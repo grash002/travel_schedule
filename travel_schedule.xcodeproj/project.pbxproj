@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EE0B1F462DA1C22A00CBDFD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0B1F452DA1C22A00CBDFD3 /* AppDelegate.swift */; };
-		EE0B1F482DA1C22A00CBDFD3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0B1F472DA1C22A00CBDFD3 /* SceneDelegate.swift */; };
 		EE0B1F4A2DA1C22A00CBDFD3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0B1F492DA1C22A00CBDFD3 /* MainViewController.swift */; };
 		EE0B1F4F2DA1C22B00CBDFD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE0B1F4E2DA1C22B00CBDFD3 /* Assets.xcassets */; };
 		EE0B1F522DA1C22B00CBDFD3 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = EE0B1F512DA1C22B00CBDFD3 /* Base */; };
@@ -19,21 +17,23 @@
 		EE3AD9302DA7F166001444C3 /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = EE3AD92E2DA7F166001444C3 /* openapi.yaml */; };
 		EE3AD9362DB0EBDD001444C3 /* InternetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3AD9352DB0EBDD001444C3 /* InternetError.swift */; };
 		EE3AD93E2DB11126001444C3 /* TrainSearchServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3AD93D2DB11126001444C3 /* TrainSearchServiceProtocol.swift */; };
+		EED345D42DB8E16500FBA79E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED345D32DB8E16500FBA79E /* ContentView.swift */; };
+		EED345D62DB8E19800FBA79E /* TravelScheduleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED345D52DB8E19800FBA79E /* TravelScheduleApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EE0B1F422DA1C22A00CBDFD3 /* travel_schedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travel_schedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE0B1F452DA1C22A00CBDFD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EE0B1F472DA1C22A00CBDFD3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EE0B1F492DA1C22A00CBDFD3 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EE0B1F4E2DA1C22B00CBDFD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE0B1F512DA1C22B00CBDFD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE0B1F532DA1C22B00CBDFD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE3AD9292DA7EC15001444C3 /* TrainSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainSearchService.swift; sourceTree = "<group>"; };
-		EE3AD92D2DA7F166001444C3 /* openapi-generator-config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "openapi-generator-config.yaml"; sourceTree = SOURCE_ROOT; };
-		EE3AD92E2DA7F166001444C3 /* openapi.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = SOURCE_ROOT; };
+		EE3AD92D2DA7F166001444C3 /* openapi-generator-config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = "openapi-generator-config.yaml"; path = "travel_schedule/Source/openapi-generator-config.yaml"; sourceTree = SOURCE_ROOT; };
+		EE3AD92E2DA7F166001444C3 /* openapi.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = openapi.yaml; path = travel_schedule/Source/openapi.yaml; sourceTree = SOURCE_ROOT; };
 		EE3AD9352DB0EBDD001444C3 /* InternetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetError.swift; sourceTree = "<group>"; };
 		EE3AD93D2DB11126001444C3 /* TrainSearchServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainSearchServiceProtocol.swift; sourceTree = "<group>"; };
+		EED345D32DB8E16500FBA79E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EED345D52DB8E19800FBA79E /* TravelScheduleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelScheduleApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,19 +68,35 @@
 		EE0B1F442DA1C22A00CBDFD3 /* travel_schedule */ = {
 			isa = PBXGroup;
 			children = (
-				EE0B1F452DA1C22A00CBDFD3 /* AppDelegate.swift */,
-				EE0B1F472DA1C22A00CBDFD3 /* SceneDelegate.swift */,
 				EE0B1F492DA1C22A00CBDFD3 /* MainViewController.swift */,
+				EE8BBEC22DB514E8008A0D87 /* Source */,
+				EE8BBEC12DB514C9008A0D87 /* TrainSearchService */,
+				EED345D32DB8E16500FBA79E /* ContentView.swift */,
+				EED345D52DB8E19800FBA79E /* TravelScheduleApp.swift */,
+			);
+			path = travel_schedule;
+			sourceTree = "<group>";
+		};
+		EE8BBEC12DB514C9008A0D87 /* TrainSearchService */ = {
+			isa = PBXGroup;
+			children = (
+				EE3AD9292DA7EC15001444C3 /* TrainSearchService.swift */,
+				EE3AD93D2DB11126001444C3 /* TrainSearchServiceProtocol.swift */,
+				EE3AD9352DB0EBDD001444C3 /* InternetError.swift */,
+			);
+			path = TrainSearchService;
+			sourceTree = "<group>";
+		};
+		EE8BBEC22DB514E8008A0D87 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				EE3AD92D2DA7F166001444C3 /* openapi-generator-config.yaml */,
+				EE3AD92E2DA7F166001444C3 /* openapi.yaml */,
 				EE0B1F4E2DA1C22B00CBDFD3 /* Assets.xcassets */,
 				EE0B1F502DA1C22B00CBDFD3 /* LaunchScreen.storyboard */,
 				EE0B1F532DA1C22B00CBDFD3 /* Info.plist */,
-				EE3AD9292DA7EC15001444C3 /* TrainSearchService.swift */,
-				EE3AD93D2DB11126001444C3 /* TrainSearchServiceProtocol.swift */,
-				EE3AD92D2DA7F166001444C3 /* openapi-generator-config.yaml */,
-				EE3AD92E2DA7F166001444C3 /* openapi.yaml */,
-				EE3AD9352DB0EBDD001444C3 /* InternetError.swift */,
 			);
-			path = travel_schedule;
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,8 +183,8 @@
 			files = (
 				EE0B1F4A2DA1C22A00CBDFD3 /* MainViewController.swift in Sources */,
 				EE3AD93E2DB11126001444C3 /* TrainSearchServiceProtocol.swift in Sources */,
-				EE0B1F462DA1C22A00CBDFD3 /* AppDelegate.swift in Sources */,
-				EE0B1F482DA1C22A00CBDFD3 /* SceneDelegate.swift in Sources */,
+				EED345D62DB8E19800FBA79E /* TravelScheduleApp.swift in Sources */,
+				EED345D42DB8E16500FBA79E /* ContentView.swift in Sources */,
 				EE3AD9362DB0EBDD001444C3 /* InternetError.swift in Sources */,
 				EE3AD92A2DA7EC15001444C3 /* TrainSearchService.swift in Sources */,
 			);
@@ -323,7 +339,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PCBJP62AP2;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = travel_schedule/Info.plist;
+				INFOPLIST_FILE = travel_schedule/Source/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -355,7 +371,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PCBJP62AP2;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = travel_schedule/Info.plist;
+				INFOPLIST_FILE = travel_schedule/Source/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
