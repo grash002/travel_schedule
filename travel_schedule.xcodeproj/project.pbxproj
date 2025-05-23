@@ -15,6 +15,9 @@
 		EE3AD9302DA7F166001444C3 /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = EE3AD92E2DA7F166001444C3 /* openapi.yaml */; };
 		EE3AD9362DB0EBDD001444C3 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3AD9352DB0EBDD001444C3 /* CustomError.swift */; };
 		EE3AD93E2DB11126001444C3 /* TrainSearchServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3AD93D2DB11126001444C3 /* TrainSearchServiceProtocol.swift */; };
+		EE7F7ACA2DE07C4D002E0C63 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = EE7F7AC82DE07C4D002E0C63 /* Localizable.stringsdict */; };
+		EE7F7ACE2DE0B27A002E0C63 /* TripSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F7ACD2DE0B279002E0C63 /* TripSettingsViewModel.swift */; };
+		EE7F7AD12DE0BD71002E0C63 /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F7AD02DE0BD71002E0C63 /* AppSettingsViewModel.swift */; };
 		EEBE98752DCA3092008FEB1C /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE98742DCA3092008FEB1C /* City.swift */; };
 		EEBE987C2DCA4043008FEB1C /* ChoiceCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE987B2DCA4043008FEB1C /* ChoiceCityViewModel.swift */; };
 		EEBE987F2DCA4635008FEB1C /* ChoiceCityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE987E2DCA4635008FEB1C /* ChoiceCityRowView.swift */; };
@@ -30,7 +33,6 @@
 		EEC5BB362DD367E800EDD0C0 /* ChoiceStationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC5BB352DD367E800EDD0C0 /* ChoiceStationViewModel.swift */; };
 		EEC5BB392DD3683000EDD0C0 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC5BB382DD3683000EDD0C0 /* Station.swift */; };
 		EEC767A22DC90E21007A3483 /* ChoiceCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC767A12DC90E21007A3483 /* ChoiceCityView.swift */; };
-		EECF52462DDCA8D4008F6940 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = EECF52442DDCA8D4008F6940 /* Localizable.stringsdict */; };
 		EECF524A2DDCB245008F6940 /* CitySelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF52492DDCB245008F6940 /* CitySelection.swift */; };
 		EECF524D2DDCB84E008F6940 /* TripSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF524C2DDCB84E008F6940 /* TripSettings.swift */; };
 		EECF52502DDCBFF0008F6940 /* TripSettingsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECF524F2DDCBFF0008F6940 /* TripSettingsRow.swift */; };
@@ -63,6 +65,10 @@
 		EE3AD92E2DA7F166001444C3 /* openapi.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; name = openapi.yaml; path = travel_schedule/Source/openapi.yaml; sourceTree = SOURCE_ROOT; };
 		EE3AD9352DB0EBDD001444C3 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		EE3AD93D2DB11126001444C3 /* TrainSearchServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainSearchServiceProtocol.swift; sourceTree = "<group>"; };
+		EE7F7AC92DE07C4D002E0C63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		EE7F7ACB2DE07CF5002E0C63 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		EE7F7ACD2DE0B279002E0C63 /* TripSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSettingsViewModel.swift; sourceTree = "<group>"; };
+		EE7F7AD02DE0BD71002E0C63 /* AppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModel.swift; sourceTree = "<group>"; };
 		EEBE98742DCA3092008FEB1C /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		EEBE987B2DCA4043008FEB1C /* ChoiceCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCityViewModel.swift; sourceTree = "<group>"; };
 		EEBE987E2DCA4635008FEB1C /* ChoiceCityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCityRowView.swift; sourceTree = "<group>"; };
@@ -78,8 +84,6 @@
 		EEC5BB352DD367E800EDD0C0 /* ChoiceStationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceStationViewModel.swift; sourceTree = "<group>"; };
 		EEC5BB382DD3683000EDD0C0 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		EEC767A12DC90E21007A3483 /* ChoiceCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCityView.swift; sourceTree = "<group>"; };
-		EECF52452DDCA8D4008F6940 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ../../../TrackerApp/Tracker/Resources/ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
-		EECF52482DDCA922008F6940 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = ../../../TrackerApp/Tracker/Resources/en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		EECF52492DDCB245008F6940 /* CitySelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelection.swift; sourceTree = "<group>"; };
 		EECF524C2DDCB84E008F6940 /* TripSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSettings.swift; sourceTree = "<group>"; };
 		EECF524F2DDCBFF0008F6940 /* TripSettingsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSettingsRow.swift; sourceTree = "<group>"; };
@@ -159,13 +163,13 @@
 		EE8BBEC22DB514E8008A0D87 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EECF52442DDCA8D4008F6940 /* Localizable.stringsdict */,
 				EE3AD92D2DA7F166001444C3 /* openapi-generator-config.yaml */,
 				EE3AD92E2DA7F166001444C3 /* openapi.yaml */,
 				EE0B1F4E2DA1C22B00CBDFD3 /* Assets.xcassets */,
 				EE0B1F532DA1C22B00CBDFD3 /* Info.plist */,
 				EEE6AD0A2DC242D700F05325 /* Launch Screen.storyboard */,
 				EEBE98942DCB6FB5008FEB1C /* Configuration.swift */,
+				EE7F7AC82DE07C4D002E0C63 /* Localizable.stringsdict */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -200,6 +204,8 @@
 				EEBE988B2DCB6354008FEB1C /* ListOfTripsViewModel.swift */,
 				EEBE98912DCB6E94008FEB1C /* MainViewModel.swift */,
 				EEC5BB352DD367E800EDD0C0 /* ChoiceStationViewModel.swift */,
+				EE7F7ACD2DE0B279002E0C63 /* TripSettingsViewModel.swift */,
+				EE7F7AD02DE0BD71002E0C63 /* AppSettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -305,8 +311,8 @@
 				EE0B1F4F2DA1C22B00CBDFD3 /* Assets.xcassets in Resources */,
 				EE3AD9302DA7F166001444C3 /* openapi.yaml in Resources */,
 				EEE6AD0B2DC242D700F05325 /* Launch Screen.storyboard in Resources */,
+				EE7F7ACA2DE07C4D002E0C63 /* Localizable.stringsdict in Resources */,
 				EE3AD92F2DA7F166001444C3 /* openapi-generator-config.yaml in Resources */,
-				EECF52462DDCA8D4008F6940 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EECF524D2DDCB84E008F6940 /* TripSettings.swift in Sources */,
+				EE7F7AD12DE0BD71002E0C63 /* AppSettingsViewModel.swift in Sources */,
 				EEBE987C2DCA4043008FEB1C /* ChoiceCityViewModel.swift in Sources */,
 				EEF35BF52DDB94B000A3CAB5 /* ServerErrorView.swift in Sources */,
 				EEBE98822DCB4F4F008FEB1C /* MainView.swift in Sources */,
@@ -329,6 +336,7 @@
 				EEBE98952DCB6FB5008FEB1C /* Configuration.swift in Sources */,
 				EECF52682DDE6E4A008F6940 /* UserAgreementView.swift in Sources */,
 				EE3AD93E2DB11126001444C3 /* TrainSearchServiceProtocol.swift in Sources */,
+				EE7F7ACE2DE0B27A002E0C63 /* TripSettingsViewModel.swift in Sources */,
 				EEE6AD142DC2585B00F05325 /* CustomTextFieldView.swift in Sources */,
 				EEF35BEB2DD4DEBE00A3CAB5 /* ChoiceStationView.swift in Sources */,
 				EEBE988E2DCB6390008FEB1C /* Carrier.swift in Sources */,
@@ -366,11 +374,11 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		EECF52442DDCA8D4008F6940 /* Localizable.stringsdict */ = {
+		EE7F7AC82DE07C4D002E0C63 /* Localizable.stringsdict */ = {
 			isa = PBXVariantGroup;
 			children = (
-				EECF52452DDCA8D4008F6940 /* ru */,
-				EECF52482DDCA922008F6940 /* en */,
+				EE7F7AC92DE07C4D002E0C63 /* en */,
+				EE7F7ACB2DE07CF5002E0C63 /* ru */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";

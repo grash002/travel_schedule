@@ -7,8 +7,13 @@
 
 import SwiftUI
 
+//MARK: - ServerErrorView
+
 struct ServerErrorView: View {
-    var body: some View {        
+    
+    //MARK: - Content
+    
+    var body: some View {
         VStack {
             Image("Server Error")
                 .resizable()
@@ -19,6 +24,8 @@ struct ServerErrorView: View {
         }
     }
 }
+
+//MARK: - Preview
 
 #Preview {
     ServerErrorView()

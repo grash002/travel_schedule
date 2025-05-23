@@ -7,76 +7,111 @@
 
 import SwiftUI
 
+// MARK: - ChoiceCityView
+
 struct ChoiceCityView: View {
+    
+    // MARK: - Public properties
+    
     @Binding var selectedCity: String?
     @Binding var path: NavigationPath
     @ObservedObject var viewModel: ChoiceCityViewModel
     @State var isNavigated = false
     var onSelected: () -> Void
     
+    // MARK: - Content
+    
     var body: some View {
-        Group {
-            if let error = viewModel.error {
-                switch error {
-                case .ServerError:
-                    ServerErrorView()
-                case .InternetError:
-                    InternetErrorView()
-                default:
-                    ServerErrorView()
-                }
-            } else if viewModel.isLoading {
-                VStack {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                }
+        mainView
+            .searchable(text: $viewModel.searchText)
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                backToolBarContent
+                titleToolBarContent
             }
-            else {
-                if !viewModel.filteredCity.isEmpty {
-                    ScrollView {
-                        LazyVStack {
-                            ForEach(viewModel.filteredCity) { station in
-                                ChoiceCityRowView(station: station)
-                                    .onTapGesture {
-                                        selectedCity = station.name
-                                        onSelected()
-                                    }
-                            }
+    }
+    
+    // MARK: - Views
+    
+    @ViewBuilder
+    private var mainView: some View {
+        if let error = viewModel.error {
+            switch error {
+            case .ServerError:
+                ServerErrorView()
+            case .InternetError:
+                InternetErrorView()
+            default:
+                ServerErrorView()
+            }
+        } else if viewModel.isLoading {
+            progressView
+        }
+        else {
+            cityList
+        }
+    }
+    @ViewBuilder
+    private var cityList: some View {
+        if !viewModel.filteredCity.isEmpty {
+            mainScroll
+        } else {
+            notFoundView
+        }
+    }
+    private var progressView: some View {
+        VStack {
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+        }
+    }
+    private var notFoundView: some View {
+        VStack {
+            Spacer()
+            Text("Город не найден")
+                .font(.system(size: 24, weight: .bold))
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.height)
+    }
+    private var mainScroll: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(viewModel.filteredCity) { station in
+                    ChoiceCityRowView(station: station)
+                        .onTapGesture {
+                            selectedCity = station.name
+                            onSelected()
                         }
-                    }
-                } else {
-                    VStack {
-                        Spacer()
-                        Text("Город не найден")
-                            .font(.system(size: 24, weight: .bold))
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.height)
                 }
             }
         }
-        .searchable(text: $viewModel.searchText)
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    path.removeLast()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.primary)
-                        .imageScale(.large)
-                }
+    }
+    
+    
+    // MARK: - ToolBarContent
+    
+    private var backToolBarContent: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarLeading) {
+            Button(action: {
+                path.removeLast()
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.primary)
+                    .imageScale(.large)
             }
-            
-            ToolbarItem(placement: .principal) {
-                Text("Выбор города")
-                    .font(.system(size: 17,weight: .bold))
-                    .multilineTextAlignment(.center)
-            }
+        }
+    }
+    private var titleToolBarContent: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            Text("Выбор города")
+                .font(.system(size: 17,weight: .bold))
+                .multilineTextAlignment(.center)
         }
     }
 }
 
+// MARK: - Preview
 
 #Preview {
     ChoiceCityView(selectedCity: .constant(""),

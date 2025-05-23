@@ -8,10 +8,60 @@
 import SwiftUI
 
 struct CarrierView: View {
+    
+    // MARK: - Properties
+    
     @Binding var path: NavigationPath
     var carrier: Carrier
+    
+    // MARK: - Content
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            carrierTitleView
+            emailView
+            phoneView
+            Spacer()
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            backToolBarContent
+            titleToolBarContent
+        }
+    }
+    
+    
+    // MARK: - Views
+    
+    private var phoneView: some View {
+        VStack(alignment: .leading) {
+            Text("Телефон")
+                .font(.system(size: 17))
+            if let url = URL(string: "tel:\(carrier.phone)") {
+                Link(destination: url, label: {
+                    Text(carrier.phone)
+                        .font(.system(size: 12))
+                })
+            }
+        }
+    }
+    private var emailView: some View {
+        VStack(alignment: .leading) {
+            Text("E-mail")
+                .font(.system(size: 17))
+            if let url = URL(string: "mailto:\(carrier.email)") {
+                Link(destination: url, label: {
+                    Text(carrier.email)
+                        .font(.system(size: 12))
+                })
+            }
+        }
+    }
+    private var carrierTitleView: some View {
+        Group {
             AsyncImage(url: carrier.imageURL) { phase in
                 switch phase {
                 case .empty:
@@ -31,52 +81,32 @@ struct CarrierView: View {
             }
             Text(carrier.name)
                 .font(.system(size: 24,weight: .bold))
-            VStack(alignment: .leading) {
-                Text("E-mail")
-                    .font(.system(size: 17))
-                if let url = URL(string: "mailto:\(carrier.email)") {
-                    Link(destination: url, label: {
-                        Text(carrier.email)
-                            .font(.system(size: 12))
-                    })
-                }
-            }
-            VStack(alignment: .leading) {
-                Text("Телефон")
-                    .font(.system(size: 17))
-                if let url = URL(string: "tel:\(carrier.phone)") {
-                    Link(destination: url, label: {
-                        Text(carrier.phone)
-                            .font(.system(size: 12))
-                    })
-                }
-            }
-            Spacer()
         }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    path.removeLast()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.primary)
-                        .imageScale(.large)
-                }
+    }
+    
+    // MARK: - ToolBarContent
+    
+    private var backToolBarContent: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarLeading) {
+            Button(action: {
+                path.removeLast()
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.primary)
+                    .imageScale(.large)
             }
-            
-            ToolbarItem(placement: .principal) {
-                Text("Информация о перевозчике")
-                    .font(.system(size: 17,weight: .bold))
-                    .multilineTextAlignment(.center)
-            }
+        }
+    }
+    private var titleToolBarContent: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            Text("Информация о перевозчике")
+                .font(.system(size: 17,weight: .bold))
+                .multilineTextAlignment(.center)
         }
     }
 }
 
+// MARK: - Preview
 #Preview {
     CarrierView(path: .constant(NavigationPath()),
                 carrier: Carrier(name: "ОАО «РЖД»",

@@ -7,7 +7,12 @@
 
 import SwiftUI
 
+//MARK: - InternetErrorView
+
 struct InternetErrorView: View {
+    
+    //MARK: - Content
+    
     var body: some View {
         VStack {
             Image("No Internet")
@@ -19,6 +24,8 @@ struct InternetErrorView: View {
         }
     }
 }
+
+//MARK: - Preview
 
 #Preview {
     InternetErrorView()

@@ -8,33 +8,47 @@
 import SwiftUI
 
 struct AppSettings: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var appearanceManager: AppAppearanceManager
     @Binding var path: NavigationPath
+    @StateObject var viewModel: AppSettingsViewModel
+    
+    // MARK: - Content
     
     var body: some View {
-        VStack {
-            Toggle("Темная тема", isOn: Binding(get: { appearanceManager.isDarkMode }, set: { newValue in appearanceManager.isDarkMode = newValue }))
-                .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+            VStack {
+                Toggle("Темная тема", isOn: Binding(get: { appearanceManager.isDarkMode }, set: { newValue in appearanceManager.isDarkMode = newValue }))
+                    .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                    .padding(.vertical, 19)
+                HStack {
+                    Text("Пользовательское соглашение")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.primary)
+                        .imageScale(.large)
+                }
                 .padding(.vertical, 19)
-            HStack {
-                Text("Пользовательское соглашение")
+                .clipShape(Rectangle())
+                .onTapGesture {
+                    path.append("UserAgreementView")
+                }
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.primary)
-                    .imageScale(.large)
+                VStack(alignment: .center, spacing: 16) {
+                    Text("\(viewModel.copyrightText)")
+                    Text("Версия 1.0 (beta)")
+                }
+                .font(.system(size: 12))
             }
-            .padding(.vertical, 19)
-            .clipShape(Rectangle())
-            .onTapGesture {
-                path.append("UserAgreementView")
-            }
-            Spacer()
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 24)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 24)
+        
     }
 }
 
+// MARK: - Preview
+
 #Preview {
-    AppSettings( path: .constant(NavigationPath()))
+    AppSettings( path: .constant(NavigationPath()), viewModel: AppSettingsViewModel())
 }

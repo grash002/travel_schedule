@@ -7,8 +7,15 @@
 
 import SwiftUI
 
+// MARK: - UserAgreementView
+
 struct UserAgreementView: View {
+    
+    // MARK: - Properties
+    
     @Binding var path: NavigationPath
+    
+    // MARK: - Views
     
     var body: some View {
         Group {
@@ -30,6 +37,8 @@ struct UserAgreementView: View {
         }
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     UserAgreementView(path: .constant(NavigationPath()))

@@ -7,107 +7,118 @@
 
 import SwiftUI
 
+// MARK: - MainView
+
 struct MainView: View {
-    @State var departurePoint: Station = Station(name: "", code: "")
-    @State var arrivalPoint: Station = Station(name: "", code: "")
-    @ObservedObject var viewModel = MainViewModel()
-    @State private var isNavigated: Bool = false
     
-    @StateObject var listOfTripsViewModel = ListOfTripsViewModel(departurePoint: Station(name: "", code: ""), arrivalPoint: Station(name: "", code: ""))
-    @State private var selectedStation: String?
-    @State private var selectedCity: String?
+    // MARK: - Properties
     
-    @State var selectedField: SelectedField? = nil
-    @State var settings = SettingsCheck()
-    @State private var path = NavigationPath()
-    private let choiceCityViewModel: ChoiceCityViewModel = ChoiceCityViewModel()
+    @StateObject var viewModel = MainViewModel()
     
+    // MARK: - Content
     
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $viewModel.path) {
             TabView {
                 ZStack {
                     Color(uiColor: .systemBackground)
                         .edgesIgnoringSafeArea(.top)
-                    VStack(spacing: 16) {
-                        SearchTrainView(departurePoint: $departurePoint,
-                                        arrivalPoint: $arrivalPoint, selectedField: $selectedField,path: $path)
-                        .padding(.horizontal, 16)
-                        .padding(.top, 20)
-                        Button {
-                            path.append("ListOfTripsView")
-                        } label: {
-                            Text("Найти")
-                                .font(.system(size: 17, weight: .bold))
-                                .frame(width: 150, height: 60)
-                                .foregroundColor(.white)
-                                .background(.blue)
-                                .cornerRadius(16)
-                        }
-                        .opacity(arrivalPoint.name.isEmpty == false && departurePoint.name.isEmpty == false ? 1 : 0)
-                        .disabled(arrivalPoint.name.isEmpty == true || departurePoint.name.isEmpty == true)
-                        
-                        Spacer()
-                    }
+                    searchTrainView
                 }
                 .tabItem {
                     Label("", systemImage: "arrow.up.message.fill")
                 }
-                
-                AppSettings(path: $path)
+                AppSettings(path: $viewModel.path, viewModel: viewModel.appSettingsViewModel)
                     .tabItem {
                         Label("", systemImage: "gearshape.fill")
                     }
             }
             .tint(.primary)
             .navigationDestination(for: SelectedField.self) { field in
-                ChoiceCityView(selectedCity: $selectedCity,
-                               path: $path,
-                               viewModel: choiceCityViewModel) {
-                    if let city = selectedCity {
-                        path.append(CitySelection(city: city, field: field))
+                ChoiceCityView(selectedCity: $viewModel.selectedCity,
+                               path: $viewModel.path,
+                               viewModel: viewModel.choiceCityViewModel) {
+                    if let city = viewModel.selectedCity {
+                        viewModel.path.append(CitySelection(city: city, field: field))
                     }
                 }
             }
             .navigationDestination(for: String.self) { value in
-                if value == "ListOfTripsView" {
-                    
-                    ListOfTripsView(departurePoint: $departurePoint,
-                                    arrivalPoint: $arrivalPoint,
-                                    path: $path,
-                                    viewModel: listOfTripsViewModel)
-                    .onAppear() {
-                        listOfTripsViewModel.departurePoint = departurePoint
-                        listOfTripsViewModel.arrivalPoint = arrivalPoint
-                        Task {
-                            await listOfTripsViewModel.updateFilteredTrips(newSettings: nil)
-                        }
-                    }
-                } else if value == "TripSettingsView" {
-                    TripSettings(checked: $settings, path: $path, onTap: {
-                        Task {
-                            await listOfTripsViewModel.updateFilteredTrips(newSettings: settings)
-                        }
-                    })
-                } else if value == "UserAgreementView" {
-                    UserAgreementView(path: $path)
-                }
+                stringDestination(value)
             }
-            .navigationDestination(for: CitySelection.self) { citySelection in
-                ChoiceStationView(
-                    viewModel: ChoiceStationViewModel(city: citySelection.city,
-                                                      stations: choiceCityViewModel.stationsResponse),
-                    selectedStation: citySelection.field == .arrival ? $arrivalPoint : $departurePoint,
-                    path: $path
-                )
+            .navigationDestination(for: CitySelection.self) { city in
+                cityDestination(city)
             }
-            
             .navigationDestination(for: Carrier.self) { carrier in
-                CarrierView(path: $path, carrier: carrier)
+                CarrierView(path: $viewModel.path, carrier: carrier)
             }
         }
     }
+    
+    //MARK: - Views
+    
+    private var searchTrainView: some View {
+        VStack(spacing: 16) {
+            SearchTrainView(departurePoint: $viewModel.departurePoint,
+                            arrivalPoint: $viewModel.arrivalPoint,
+                            selectedField: $viewModel.selectedField,
+                            path: $viewModel.path)
+            .padding(.horizontal, 16)
+            .padding(.top, 20)
+            Button {
+                viewModel.refreshListOfTrips()
+                viewModel.path.append("ListOfTripsView")
+            } label: {
+                Text("Найти")
+                    .font(.system(size: 17, weight: .bold))
+                    .frame(width: 150, height: 60)
+                    .foregroundColor(.white)
+                    .background(.blue)
+                    .cornerRadius(16)
+            }
+            .opacity(viewModel.isSearchButtonEnabled ? 1 : 0)
+            .disabled(!viewModel.isSearchButtonEnabled)
+            
+            Spacer()
+        }
+    }
+    
+    //MARK: - View builders
+    
+    @ViewBuilder
+    private func stringDestination(_ value: String) -> some View {
+        switch value {
+        case "ListOfTripsView":
+            ListOfTripsView(departurePoint: $viewModel.departurePoint,
+                            arrivalPoint: $viewModel.arrivalPoint,
+                            path: $viewModel.path,
+                            viewModel: viewModel.listOfTripsViewModel)
+            .onAppear() {
+                Task {
+                    await viewModel.updateTripSearch()
+                }
+            }
+        case "TripSettingsView":
+            TripSettings(viewModel: viewModel.tripSettingsViewModel, path: $viewModel.path)
+            
+        case "UserAgreementView":
+            UserAgreementView(path: $viewModel.path)
+        default:
+            EmptyView()
+        }
+    }
+    @ViewBuilder
+    private func cityDestination(_ citySelection: CitySelection) -> some View {
+        ChoiceStationView(
+            viewModel: ChoiceStationViewModel(city: citySelection.city,
+                                              stations: viewModel.choiceCityViewModel.stationsResponse),
+            selectedStation: citySelection.field == .arrival ? $viewModel.arrivalPoint : $viewModel.departurePoint,
+            path: $viewModel.path
+        )
+    }
 }
+
+//MARK: - Preview
 
 #Preview {
     ContentView()

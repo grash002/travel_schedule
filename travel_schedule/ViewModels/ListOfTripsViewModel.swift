@@ -7,7 +7,11 @@
 
 import Foundation
 
+    // MARK: - ListOfTripsViewModel
+
 final class ListOfTripsViewModel: ObservableObject {
+   
+    // MARK: - Public properties
     
     @Published var trips: [Trip] = []
     @Published var filteredTrips: [Trip] = []
@@ -18,8 +22,12 @@ final class ListOfTripsViewModel: ObservableObject {
     var departurePoint: Station
     var arrivalPoint: Station
     
+    // MARK: - Private properties
+    
     private let trainSearchService = TrainSearchService.shared
     private let formatter = DateFormatter()
+ 
+    // MARK: - Initializers
     
     init(departurePoint: Station, arrivalPoint: Station) {
         formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
@@ -30,6 +38,24 @@ final class ListOfTripsViewModel: ObservableObject {
         Task {
             await updateFilteredTrips(newSettings: nil)
         }
+    }
+    
+    // MARK: - Public methods
+    
+    func formatDayMonth(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM"
+        formatter.timeZone = TimeZone(secondsFromGMT: 3 * 3600)
+        formatter.locale = Locale(identifier: "ru_RU")
+        return formatter.string(from: date)
+    }
+
+    func formatTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.timeZone = TimeZone(secondsFromGMT: 3 * 3600)
+        return formatter.string(from: date)
     }
     
     func durationToString(_ duration: Double) -> String {
@@ -66,6 +92,8 @@ final class ListOfTripsViewModel: ObservableObject {
         
         filteredTrips = result.sorted { $0.date < $1.date || ($0.date == $1.date && $0.startTime < $1.startTime) } 
     }
+    
+    // MARK: - Private methods
     
     private func isTimeInPeriod(date: Date, from: Int, to: Int) -> Bool {
         let calendar = Calendar.current
@@ -105,10 +133,10 @@ final class ListOfTripsViewModel: ObservableObject {
             self.trips = result
         } catch let customError as CustomError {
             self.error = customError
-            print("Error stationList", self.error)
+            print("Error stationList", self.error ?? "")
         } catch {
             self.error = .ServerError
-            print("Error stationList", self.error)
+            print("Error stationList", self.error ?? "")
         }
     }
 }

@@ -7,28 +7,30 @@
 
 import Foundation
 
+    // MARK: - ChoiceStationViewModel
+
 final class ChoiceStationViewModel: ObservableObject {
-    var stations: StationList?
+    
+    // MARK: - Public properties
+    
     @Published var stationsInCity: [Station] = []
     @Published var searchText = ""
-    
+    var stations: StationList?
     var filteredStation: [Station] {
         guard !searchText.isEmpty else { return Array(stationsInCity.prefix(10)) }
-        var result = [Station]()
-        stationsInCity.forEach({ city in
-            if city.name.lowercased().contains(searchText.lowercased()) {
-                result.append(city)
-            }
-        })
-        
-        return Array(result.prefix(10))
+        return stationsInCity.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+                             .prefix(10)
+                             .map { $0 }
     }
+    
+    // MARK: - Initializers
     
     init(city: String, stations: StationList? = nil) {
         self.stations = stations
         getStations(city: city)
     }
     
+    // MARK: - Public methods
     
     func getStations(city: String) {
         guard !city.isEmpty else { return }

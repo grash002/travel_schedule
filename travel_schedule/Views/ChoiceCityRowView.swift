@@ -7,8 +7,16 @@
 
 import SwiftUI
 
+// MARK: - ChoiceCityRowView
+
 struct ChoiceCityRowView: View {
+    
+    // MARK: - Properties
+    
     let station: City
+    
+    // MARK: - Content
+    
     var body: some View {
         HStack{
             Text(station.name)
@@ -21,6 +29,9 @@ struct ChoiceCityRowView: View {
         .contentShape(Rectangle())
     }
 }
+
+
+// MARK: - Preview
 
 #Preview {
     ChoiceCityRowView(station: City(name: "Москва"))
