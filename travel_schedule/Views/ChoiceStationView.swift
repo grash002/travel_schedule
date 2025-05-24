@@ -28,7 +28,7 @@ struct ChoiceStationView: View {
                 }
             }
         }
-        .searchable(text: $viewModel.searchText)
+        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationBarBackButtonHidden(true)
         .toolbar {
             backToolBarContent

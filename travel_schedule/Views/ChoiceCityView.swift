@@ -23,7 +23,7 @@ struct ChoiceCityView: View {
     
     var body: some View {
         mainView
-            .searchable(text: $viewModel.searchText)
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 backToolBarContent
