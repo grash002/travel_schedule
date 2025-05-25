@@ -29,6 +29,7 @@ struct ChoiceCityView: View {
                 backToolBarContent
                 titleToolBarContent
             }
+            .navigationBarTitleDisplayMode(.inline)
     }
     
     // MARK: - Views

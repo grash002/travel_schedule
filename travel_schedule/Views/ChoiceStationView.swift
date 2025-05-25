@@ -34,6 +34,7 @@ struct ChoiceStationView: View {
             backToolBarContent
             titleToolBarContent
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     @ViewBuilder
