@@ -10,31 +10,50 @@ import OpenAPIURLSession
 import Foundation
 
 
-
 final class TrainSearchService: TrainSearchServiceProtocol {
     
+    static let shared = TrainSearchService()
     
-    private let client: Client
-    private let apikey: String
+    private lazy var client: Client? = {
+        do {
+            return try Client(
+                serverURL: Servers.Server1.url(),
+                transport: URLSessionTransport()
+            )
+        } catch {
+            print("Ошибка при создании клиента: \(error)")
+            return nil
+        }
+    }()
     
-    init(client: Client, apikey: String) {
-        self.client = client
-        self.apikey = apikey
-    }
+    private let apiKey: String = Config.apiKey
+    
+    private init() { }
     
     func getSchedule(station: String) async throws -> Schedule {
-        let response = try await client.getSchedule(query: .init(apikey: apikey, station: station))
+        guard let client else { throw  CustomError.ClientNil}
+        let response = try await client.getSchedule(query: .init(apikey: apiKey, station: station))
         return try response.ok.body.json
     }
     
-    func getSearch(from: String, to: String, date: String) async throws -> Search {
-        let response = try await client.getSearch(query: .init(apikey: apikey, from: from, to: to))
+    func getSearch(from: String, to: String, date: String, hasTransfers: Bool) async throws -> Search {
+        guard let client else { throw  CustomError.ClientNil}
+        let response = try await client.getSearch(query: .init(apikey: apiKey, from: from, to: to, transfers: hasTransfers))
         return try response.ok.body.json
+        switch response {
+        case .ok(let okResponse):
+            let search = try okResponse.body.json
+        case .undocumented(statusCode: 404, UndocumentedPayload()):
+            throw CustomError.notFound
+        default:
+            throw CustomError.ServerError
+        }
     }
     
     func getNearestStations(lat: Double, lng: Double, distance: Int) async throws -> NearestStations {
+        guard let client else { throw  CustomError.ClientNil}
         let response = try await client.getNearestStations(query: .init(
-            apikey: apikey,
+            apikey: apiKey,
             lat: lat,
             lng: lng,
             distance: distance
@@ -43,25 +62,28 @@ final class TrainSearchService: TrainSearchServiceProtocol {
     }
     
     func getThread(uid: String) async throws -> Thread {
+        guard let client else { throw  CustomError.ClientNil}
         let response = try await client.getThread(query: .init(
-            apikey: apikey,
+            apikey: apiKey,
             uid: uid
         ))
         return try response.ok.body.json
     }
     
     func getNearestSettlement(lat: Double, lng: Double) async throws -> NearestSettlement {
+        guard let client else { throw  CustomError.ClientNil}
         let response = try await client.getNearestSettlement(query: .init(
-            apikey: apikey,
+            apikey: apiKey,
             lat: lat,
             lng: lng
         ))
         return try response.ok.body.json
     }
     
-    func getCarrier(code: String) async throws -> Carrier {
+    func getCarrier(code: String) async throws -> CarrierResponse {
+        guard let client else { throw  CustomError.ClientNil}
         let response = try await client.getCarrier(query: .init(
-            apikey: apikey,
+            apikey: apiKey,
             code: code
         ))
         return try response.ok.body.json
@@ -69,38 +91,47 @@ final class TrainSearchService: TrainSearchServiceProtocol {
     
     
     func getCopyright() async throws -> Copyright {
-        let response = try await client.getCopyright(query: .init(apikey: apikey))
+        guard let client else { throw  CustomError.ClientNil}
+        let response = try await client.getCopyright(query: .init(apikey: apiKey))
         return try response.ok.body.json
     }
     
     
     
     func getStationList() async throws -> StationList {
-        let response = try await client.getStationsList(query: .init(
-            apikey: apikey
-        ))
-        
-        let body = try response.ok.body.html
-        var buffer = Data()
-        for try await chunk in body {
-            buffer.append(contentsOf: chunk)
+        guard let client else {
+            throw  CustomError.ClientNil
         }
-        let decoder = JSONDecoder()
         do {
-            return try decoder.decode(StationList.self, from: buffer)
-        } catch let DecodingError.dataCorrupted(context) {
-            print("Data corrupted:", context)
-        } catch let DecodingError.keyNotFound(key, context) {
-            print("Key '\(key)' not found:", context.debugDescription)
-        } catch let DecodingError.typeMismatch(type, context) {
-            print("Type '\(type)' mismatch:", context.debugDescription)
-        } catch let DecodingError.valueNotFound(value, context) {
-            print("Value '\(value)' not found:", context.debugDescription)
+            let response = try await client.getStationsList(query: .init(
+                apikey: apiKey
+            ))
+            
+            let body = try response.ok.body.html
+            var buffer = Data()
+            for try await chunk in body {
+                buffer.append(contentsOf: chunk)
+            }
+            let decoder = JSONDecoder()
+            do {
+                return try decoder.decode(StationList.self, from: buffer)
+            } catch {
+                print("Decoding error:", error)
+                throw error
+            }
+        } catch let urlError as URLError {
+            switch urlError.code {
+            case .notConnectedToInternet, .timedOut:
+                throw CustomError.InternetError
+            default:
+                print("URLError:", urlError)
+                throw CustomError.ServerError
+            }
         } catch {
-            print("Unknown decoding error:", error)
-            throw error
+            print("Unknown error:", error)
+            throw CustomError.ServerError
         }
-        return StationList()
+        
     }
 }
 
