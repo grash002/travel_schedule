@@ -41,7 +41,9 @@ struct FullStoriesView: View {
             viewModel.resetTimer()
         }
         .onAppear {
-            viewModel.onAppear()
+            Task {
+                viewModel.onAppear()
+            }
         }
         .onDisappear {
             viewModel.onDisappear()
@@ -75,7 +77,7 @@ struct FullStoriesView: View {
     
     var progressAndCloseView: some View {
         VStack(alignment: .trailing, spacing: 16) {
-            ProgressBarView(numberOfSections: viewModel.stories.count, progress: viewModel.progress)
+            ProgressBarView(viewModel: viewModel.progressBarViewModel)
             
             Button(action: {
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {

@@ -12,7 +12,7 @@ struct CarrierView: View {
     // MARK: - Properties
     
     @Binding var path: NavigationPath
-    var carrier: Carrier
+    @ObservedObject var viewModel: CarrierViewModel
     
     // MARK: - Content
     
@@ -40,9 +40,9 @@ struct CarrierView: View {
         VStack(alignment: .leading) {
             Text("Телефон")
                 .font(.system(size: 17))
-            if let url = URL(string: "tel:\(carrier.phone)") {
+            if let url = URL(string: "tel:\(viewModel.carrier.phone)") {
                 Link(destination: url, label: {
-                    Text(carrier.phone)
+                    Text(viewModel.carrier.phone)
                         .font(.system(size: 12))
                 })
             }
@@ -52,9 +52,9 @@ struct CarrierView: View {
         VStack(alignment: .leading) {
             Text("E-mail")
                 .font(.system(size: 17))
-            if let url = URL(string: "mailto:\(carrier.email)") {
+            if let url = URL(string: "mailto:\(viewModel.carrier.email)") {
                 Link(destination: url, label: {
-                    Text(carrier.email)
+                    Text(viewModel.carrier.email)
                         .font(.system(size: 12))
                 })
             }
@@ -62,7 +62,7 @@ struct CarrierView: View {
     }
     private var carrierTitleView: some View {
         Group {
-            AsyncImage(url: carrier.imageURL) { phase in
+            AsyncImage(url: viewModel.carrier.imageURL) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
@@ -79,7 +79,7 @@ struct CarrierView: View {
                     EmptyView()
                 }
             }
-            Text(carrier.name)
+            Text(viewModel.carrier.name)
                 .font(.system(size: 24,weight: .bold))
         }
     }
@@ -108,9 +108,10 @@ struct CarrierView: View {
 
 // MARK: - Preview
 #Preview {
-    CarrierView(path: .constant(NavigationPath()),
-                carrier: Carrier(name: "ОАО «РЖД»",
-                                 imageURL: URL(string: "https://yastat.net/s3/rasp/media/data/company/logo/logorus_1.jpg"),
-                                 email: "rzd@mail.ru",
-                                 phone: "+7 (900) 123-45-67"))
+    let viewModel = CarrierViewModel(carrier: Carrier(name: "ОАО «РЖД»",
+                                                      imageURL: URL(string: "https://yastat.net/s3/rasp/media/data/company/logo/logorus_1.jpg"),
+                                                      email: "rzd@mail.ru",
+                                                      phone: "+7 (900) 123-45-67"))
+    return CarrierView(path: .constant(NavigationPath()),
+                viewModel: viewModel)
 }

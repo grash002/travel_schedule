@@ -54,7 +54,10 @@ struct MainView: View {
                 cityDestination(city)
             }
             .navigationDestination(for: Carrier.self) { carrier in
-                CarrierView(path: $viewModel.path, carrier: carrier)
+                Task {
+                    viewModel.carrierViewModel.carrier = carrier
+                }
+                return CarrierView(path: $viewModel.path, viewModel: viewModel.carrierViewModel)
             }
         }
     }

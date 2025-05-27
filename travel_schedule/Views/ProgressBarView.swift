@@ -11,10 +11,8 @@ import SwiftUI
 
 struct ProgressBarView: View {
     
-    // MARK: - Public properties
-    
-    let numberOfSections: Int
-    let progress: CGFloat
+    // MARK: - Private properties
+    @ObservedObject var viewModel: ProgressBarViewModel
     
     // MARK: - Content
     
@@ -24,7 +22,7 @@ struct ProgressBarView: View {
                 progressBar(geometry)
             }
             .mask {
-                MaskView(numberOfSections: numberOfSections)
+                MaskView(numberOfSections: viewModel.numberOfSections)
             }
         }
         .frame(height: 6)
@@ -41,7 +39,7 @@ struct ProgressBarView: View {
         RoundedRectangle(cornerRadius: .progressBarCornerRadius)
             .frame(
                 width: min(
-                    progress * geometry.size.width,
+                    viewModel.progress * geometry.size.width,
                     geometry.size.width
                 ),
                 height: .progressBarHeight
@@ -68,5 +66,6 @@ struct ProgressBarView: View {
 }
 
 #Preview {
-    ProgressBarView(numberOfSections: 5, progress: 0.5)
+    let viewModel = ProgressBarViewModel(numberOfSections: 5, progress: 0.5)
+    return ProgressBarView(viewModel: viewModel)
 }

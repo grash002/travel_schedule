@@ -10,7 +10,7 @@ import OpenAPIURLSession
 import Foundation
 
 
-final class TrainSearchService: TrainSearchServiceProtocol {
+actor TrainSearchService: TrainSearchServiceProtocol {
     
     static let shared = TrainSearchService()
     
