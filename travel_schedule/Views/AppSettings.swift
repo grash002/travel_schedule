@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - AppSettings
+
 struct AppSettings: View {
     
     // MARK: - Properties
