@@ -9,6 +9,7 @@ import Foundation
 
     // MARK: - ChoiceStationViewModel
 
+@MainActor
 final class ChoiceStationViewModel: ObservableObject {
     
     // MARK: - Public properties

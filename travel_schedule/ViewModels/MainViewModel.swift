@@ -9,6 +9,7 @@ import SwiftUI
 
     // MARK: - MainViewModel
 
+@MainActor
 final class MainViewModel:ObservableObject {
     
     // MARK: - Public properties
@@ -24,6 +25,7 @@ final class MainViewModel:ObservableObject {
     let fullStoriesViewModel = FullStoriesViewModel()
     let choiceCityViewModel: ChoiceCityViewModel = ChoiceCityViewModel()
     let listOfTripsViewModel = ListOfTripsViewModel(departurePoint: Station(name: "", code: ""), arrivalPoint: Station(name: "", code: ""))
+    let carrierViewModel = CarrierViewModel(carrier: Carrier(name: "", imageURL: URL(string: ""), email: "", phone: ""))
     var isSearchButtonEnabled: Bool {
         !departurePoint.name.isEmpty && !arrivalPoint.name.isEmpty
     }

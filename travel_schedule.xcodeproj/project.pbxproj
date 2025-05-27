@@ -22,6 +22,8 @@
 		EE6E17492DE5B76E00C18E54 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E17482DE5B76E00C18E54 /* ProgressBarView.swift */; };
 		EE6E175E2DE5BAD000C18E54 /* StoryConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E175D2DE5BAD000C18E54 /* StoryConfig.swift */; };
 		EE6E17872DE5F88500C18E54 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E17862DE5F88500C18E54 /* CGFloat+Extensions.swift */; };
+		EE6E179F2DE6652700C18E54 /* CarrierViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E179E2DE6652700C18E54 /* CarrierViewModel.swift */; };
+		EE6E17A42DE6696D00C18E54 /* ProgressBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E17A32DE6696D00C18E54 /* ProgressBarViewModel.swift */; };
 		EE7F7ACA2DE07C4D002E0C63 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = EE7F7AC82DE07C4D002E0C63 /* Localizable.stringsdict */; };
 		EE7F7ACE2DE0B27A002E0C63 /* TripSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F7ACD2DE0B279002E0C63 /* TripSettingsViewModel.swift */; };
 		EE7F7AD12DE0BD71002E0C63 /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F7AD02DE0BD71002E0C63 /* AppSettingsViewModel.swift */; };
@@ -79,6 +81,8 @@
 		EE6E17482DE5B76E00C18E54 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		EE6E175D2DE5BAD000C18E54 /* StoryConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryConfig.swift; sourceTree = "<group>"; };
 		EE6E17862DE5F88500C18E54 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		EE6E179E2DE6652700C18E54 /* CarrierViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierViewModel.swift; sourceTree = "<group>"; };
+		EE6E17A32DE6696D00C18E54 /* ProgressBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarViewModel.swift; sourceTree = "<group>"; };
 		EE7F7AC92DE07C4D002E0C63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		EE7F7ACB2DE07CF5002E0C63 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		EE7F7ACD2DE0B279002E0C63 /* TripSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -224,6 +228,8 @@
 				EE7F7ACD2DE0B279002E0C63 /* TripSettingsViewModel.swift */,
 				EE7F7AD02DE0BD71002E0C63 /* AppSettingsViewModel.swift */,
 				EE6E16E12DE4918F00C18E54 /* FullStoriesViewModel.swift */,
+				EE6E179E2DE6652700C18E54 /* CarrierViewModel.swift */,
+				EE6E17A32DE6696D00C18E54 /* ProgressBarViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -355,6 +361,7 @@
 				EE6E16BF2DE47BE300C18E54 /* Story.swift in Sources */,
 				EE6E175E2DE5BAD000C18E54 /* StoryConfig.swift in Sources */,
 				EEC5BB362DD367E800EDD0C0 /* ChoiceStationViewModel.swift in Sources */,
+				EE6E17A42DE6696D00C18E54 /* ProgressBarViewModel.swift in Sources */,
 				EE6E16C22DE47E5F00C18E54 /* PreviewStoriesView.swift in Sources */,
 				EEBE98882DCB6327008FEB1C /* ListOfTripsRowView.swift in Sources */,
 				EEBE98952DCB6FB5008FEB1C /* Configuration.swift in Sources */,
@@ -381,6 +388,7 @@
 				EECF52662DDE649B008F6940 /* AppAppearanceManager.swift in Sources */,
 				EE6E16EF2DE492F400C18E54 /* FullStoriesView.swift in Sources */,
 				EE3AD9362DB0EBDD001444C3 /* CustomError.swift in Sources */,
+				EE6E179F2DE6652700C18E54 /* CarrierViewModel.swift in Sources */,
 				EEF35BF22DDB939000A3CAB5 /* InternetErrorView.swift in Sources */,
 				EEBE988C2DCB6354008FEB1C /* ListOfTripsViewModel.swift in Sources */,
 				EECF524A2DDCB245008F6940 /* CitySelection.swift in Sources */,
@@ -474,6 +482,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Debug;
 		};
@@ -529,6 +538,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -9,6 +9,7 @@ import Combine
 
 // MARK: - ChoiceCityViewModel
 
+@MainActor
 final class ChoiceCityViewModel: ObservableObject {
     
     // MARK: - Public properties

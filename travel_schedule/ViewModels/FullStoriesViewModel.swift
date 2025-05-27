@@ -10,6 +10,7 @@ import Combine
 
 // MARK: - FullStoriesViewModel
 
+@MainActor
 final class FullStoriesViewModel: ObservableObject {
     
     // MARK: - Public properties
@@ -17,8 +18,10 @@ final class FullStoriesViewModel: ObservableObject {
     @Published var stories: [Story] = [.story1, .story2, .story3, .story4, .story5, .story6]
     @Published var progress: CGFloat = 0
     @Published var timer: Timer.TimerPublisher
+    @ObservedObject var progressBarViewModel = ProgressBarViewModel(numberOfSections: 0, progress: 0)
     var currentStory: Story { stories[currentStoryIndex] }
     var currentStoryIndex: Int { Int(progress * CGFloat(stories.count)) }
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Private properties
     
@@ -31,6 +34,11 @@ final class FullStoriesViewModel: ObservableObject {
         self.stories = stories
         configuration = StoryConfig(storiesCount: stories.count)
         timer = Self.createTimer(configuration: configuration)
+        progressBarViewModel.numberOfSections = stories.count
+        $progress
+            .receive(on: RunLoop.main)
+            .assign(to: \.progress, on: progressBarViewModel)
+            .store(in: &cancellables)
     }
     
     // MARK: - Public methods
@@ -83,7 +91,7 @@ final class FullStoriesViewModel: ObservableObject {
     func onReceive() {
         timerTick()
     }
-
+    
     private static func createTimer(configuration: StoryConfig) -> Timer.TimerPublisher {
         Timer.publish(every: configuration.timerTickInternal, on: .main, in: .common)
     }

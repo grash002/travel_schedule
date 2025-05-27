@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - AppSettingsViewModel
 
+@MainActor
 final class AppSettingsViewModel: ObservableObject {
     
     // MARK: - Public properties

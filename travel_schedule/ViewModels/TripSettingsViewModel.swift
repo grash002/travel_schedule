@@ -8,6 +8,8 @@
 import SwiftUI
 
 // MARK: - TripSettingsViewModel
+
+@MainActor
 final class TripSettingsViewModel: ObservableObject {
     
     // MARK: - Public properties

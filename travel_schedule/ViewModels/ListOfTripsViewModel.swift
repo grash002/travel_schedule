@@ -9,6 +9,7 @@ import Foundation
 
     // MARK: - ListOfTripsViewModel
 
+@MainActor
 final class ListOfTripsViewModel: ObservableObject {
    
     // MARK: - Public properties
