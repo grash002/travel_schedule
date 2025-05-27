@@ -21,6 +21,7 @@ final class MainViewModel:ObservableObject {
     @Published var selectedField: SelectedField? = nil
     @Published var settings = SettingsCheck()
     @Published var path = NavigationPath()
+    let fullStoriesViewModel = FullStoriesViewModel()
     let choiceCityViewModel: ChoiceCityViewModel = ChoiceCityViewModel()
     let listOfTripsViewModel = ListOfTripsViewModel(departurePoint: Station(name: "", code: ""), arrivalPoint: Station(name: "", code: ""))
     var isSearchButtonEnabled: Bool {

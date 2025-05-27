@@ -7,46 +7,45 @@
 
 import SwiftUI
 
+// MARK: - PreviewStoriesView
+
 struct PreviewStoriesView: View {
-    @StateObject private var viewModel = FullStoriesViewModel()
-    @Namespace var animation
+    
+    // MARK: - Public properties
+    
+    @StateObject var viewModel: FullStoriesViewModel
+    @Binding var path: NavigationPath
+    
+    // MARK: - Content
     
     var body: some View {
         ZStack {
-            
-            if let selectedStory = viewModel.selectedStory, viewModel.showFullScreen {
-                FullStories(story: selectedStory,
-                            animation: animation,
-                            viewModel: viewModel,
-                            isShown: $viewModel.showFullScreen,
-                            currentStoryIndex: $viewModel.currentStoryIndex)
-            } else {
-                ScrollView(.horizontal){
-                    HStack(spacing: 12) {
-                        ForEach(viewModel.stories, id: \.self) { story in
-                            preview(story: story)
-                                .frame(width: 92, height: 140)
-                                .opacity(story.wasRead ? 0.5 : 1)
-                                .matchedGeometryEffect(id: story.id, in: animation)
-                                .onTapGesture {
-                                    withAnimation(.spring(response: 0.5, dampingFraction: 0.8)){
-                                        viewModel.selectedStory = story
-                                        viewModel.showFullScreen = true
-                                        if let index = viewModel.stories.firstIndex(where: {$0.id == story.id }) {
-                                            viewModel.currentStoryIndex = index
-                                        }
-                                    }
-                                }
-                        }
-                    }
-                }
-                .scrollIndicators(.hidden)
-                .onAppear {
-                    viewModel.stories[0].wasRead.toggle()
+            ScrollView(.horizontal){
+                HStack(spacing: 12) {
+                    storiesView
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
+    
+    // MARK: - Views
+    
+    var storiesView: some View {
+        ForEach(viewModel.stories, id: \.self) { story in
+            preview(story: story)
+                .frame(width: 92, height: 140)
+                .opacity(story.wasRead ? 0.5 : 1)
+                .onTapGesture {
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.8)){
+                        viewModel.setProgress(story: story)
+                        path.append("FullStoriesView")
+                    }
+                }
+        }
+    }
+    
+    // MARK: - ViewBuilders
     
     @ViewBuilder
     private func preview(story: Story) -> some View {
@@ -78,6 +77,8 @@ struct PreviewStoriesView: View {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
-    PreviewStoriesView()
+    PreviewStoriesView(viewModel: FullStoriesViewModel(), path: .constant(NavigationPath()))
 }

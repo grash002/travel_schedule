@@ -23,7 +23,11 @@ struct MainView: View {
                 ZStack {
                     Color(uiColor: .systemBackground)
                         .edgesIgnoringSafeArea(.top)
-                    searchTrainView
+                    VStack(spacing: 44) {
+                        PreviewStoriesView(viewModel: viewModel.fullStoriesViewModel, path: $viewModel.path)
+                            .padding(.leading, 16)
+                        searchTrainView
+                    }
                 }
                 .tabItem {
                     Label("", systemImage: "arrow.up.message.fill")
@@ -63,8 +67,6 @@ struct MainView: View {
                             arrivalPoint: $viewModel.arrivalPoint,
                             selectedField: $viewModel.selectedField,
                             path: $viewModel.path)
-            .padding(.horizontal, 16)
-            .padding(.top, 20)
             Button {
                 viewModel.refreshListOfTrips()
                 viewModel.path.append("ListOfTripsView")
@@ -81,6 +83,7 @@ struct MainView: View {
             
             Spacer()
         }
+        .padding(.horizontal, 16)
     }
     
     //MARK: - View builders
@@ -103,6 +106,8 @@ struct MainView: View {
             
         case "UserAgreementView":
             UserAgreementView(path: $viewModel.path)
+        case "FullStoriesView":
+            FullStoriesView(viewModel: viewModel.fullStoriesViewModel, path: $viewModel.path)
         default:
             EmptyView()
         }

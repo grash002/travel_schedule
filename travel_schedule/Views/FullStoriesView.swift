@@ -6,39 +6,77 @@
 //
 
 import SwiftUI
+import Combine
 
-struct FullStories: View {
-    var story: Story
-    var animation: Namespace.ID
+// MARK: - FullStoriesView
+
+struct FullStoriesView: View {
+    
+    // MARK: - Public properties
+    
     @StateObject var viewModel: FullStoriesViewModel
-    @Binding var isShown: Bool
-    @Binding var currentStoryIndex: Int
+    @Binding var path: NavigationPath
+    @State private var dragOffset: CGFloat = 0
+    
+    // MARK: - Content
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Color.black
                 .ignoresSafeArea()
-            Image(story.backgroundImage)
+            storyView
+                .offset(x: dragOffset)
+                .opacity(1 - Double(abs(dragOffset) / 200))
+                .animation(.easeInOut(duration: 0.3), value: dragOffset)
+            
+            progressAndCloseView
+        }
+        .background(Color.black.ignoresSafeArea())
+        .onTapGesture {
+            viewModel.nextStory()
+            viewModel.resetTimer()
+        }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .onDisappear {
+            viewModel.onDisappear()
+        }
+        .onReceive(viewModel.timer) { _ in
+            viewModel.onReceive()
+        }
+        .gesture(drag)
+        .navigationBarBackButtonHidden(true)
+    }
+    
+    // MARK: - Views
+    
+    var storyView: some View {
+        Group {
+            Image(viewModel.currentStory.backgroundImage)
                 .resizable()
                 .scaledToFill()
-                .matchedGeometryEffect(id: story.id, in: animation)
                 .clipShape(RoundedRectangle(cornerRadius: 40))
-                .ignoresSafeArea()
-            
             VStack(spacing: 16) {
                 Spacer()
-                Text(story.title)
+                Text(viewModel.currentStory.title)
                     .font(.system(size: 34, weight: .bold))
-                Text(story.description)
+                Text(viewModel.currentStory.description)
                     .font(.system(size: 17))
             }
             .foregroundColor(.white)
-            .padding(.horizontal, 16)
-            .padding(.bottom, 40)
+            .padding(.init(top: 0, leading: 16, bottom: 40, trailing: 16))
+        }
+    }
+    
+    var progressAndCloseView: some View {
+        VStack(alignment: .trailing, spacing: 16) {
+            ProgressBarView(numberOfSections: viewModel.stories.count, progress: viewModel.progress)
             
             Button(action: {
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                    isShown = false
+                    path.removeLast()
+                    viewModel.onDisappear()
                 }
             }) {
                 Image("closeButton")
@@ -47,31 +85,45 @@ struct FullStories: View {
                     .padding(.trailing, 12)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.ignoresSafeArea())
-        .transition(.opacity)
-        .onTapGesture {
-            viewModel.nextStory()
-        }
+        .padding(.init(top: 28, leading: 12, bottom: 12, trailing: 12))
+    }
+    
+    var drag: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                dragOffset = value.translation.width
+            }
+            .onEnded { value in
+                let threshold: CGFloat = 50
+                if value.translation.width < -threshold {
+                    withAnimation {
+                        dragOffset = -300
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        viewModel.nextStory()
+                        viewModel.resetTimer()
+                        dragOffset = 0
+                    }
+                } else if value.translation.width > threshold {
+                    withAnimation {
+                        dragOffset = 300
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        viewModel.previousStory()
+                        viewModel.resetTimer()
+                        dragOffset = 0
+                    }
+                } else {
+                    withAnimation {
+                        dragOffset = 0
+                    }
+                }
+            }
     }
 }
 
+// MARK: - Preview
 
 #Preview {
-    PreviewWrapper()
-}
-
-private struct PreviewWrapper: View {
-    @Namespace var animation
-    @State var isShown = true
-    
-    var body: some View {
-        FullStories(
-            story: Story.story1,
-            animation: animation,
-            viewModel: FullStoriesViewModel(),
-            isShown: $isShown,
-            currentStoryIndex: .constant(0)
-        )
-    }
+    FullStoriesView(viewModel: FullStoriesViewModel(), path: .constant(NavigationPath()))
 }

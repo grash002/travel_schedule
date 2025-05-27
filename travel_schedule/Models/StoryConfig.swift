@@ -7,10 +7,17 @@
 
 import Foundation
 
+// MARK: - StoryConfig
+
 struct StoryConfig {
+    
+    // MARK: - Public properties
+    
     let timerTickInternal: TimeInterval
     let progressPerTick: CGFloat
-
+    
+    // MARK: - Initializers
+    
     init(
         storiesCount: Int,
         secondsPerStory: TimeInterval = 5,
