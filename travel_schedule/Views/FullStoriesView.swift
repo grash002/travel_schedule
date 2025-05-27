@@ -12,10 +12,14 @@ import Combine
 
 struct FullStoriesView: View {
     
+    
     // MARK: - Public properties
     
-    @StateObject var viewModel: FullStoriesViewModel
     @Binding var path: NavigationPath
+    @ObservedObject var viewModel: FullStoriesViewModel
+    
+    // MARK: - Private properties
+    
     @State private var dragOffset: CGFloat = 0
     
     // MARK: - Content
@@ -79,7 +83,7 @@ struct FullStoriesView: View {
                     viewModel.onDisappear()
                 }
             }) {
-                Image("closeButton")
+                Image(.closeButton)
                     .resizable()
                     .frame(width: 30, height: 30)
                     .padding(.trailing, 12)
@@ -125,5 +129,5 @@ struct FullStoriesView: View {
 // MARK: - Preview
 
 #Preview {
-    FullStoriesView(viewModel: FullStoriesViewModel(), path: .constant(NavigationPath()))
+    FullStoriesView(path: .constant(NavigationPath()), viewModel: FullStoriesViewModel())
 }

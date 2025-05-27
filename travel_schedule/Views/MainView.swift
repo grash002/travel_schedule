@@ -107,7 +107,7 @@ struct MainView: View {
         case "UserAgreementView":
             UserAgreementView(path: $viewModel.path)
         case "FullStoriesView":
-            FullStoriesView(viewModel: viewModel.fullStoriesViewModel, path: $viewModel.path)
+            FullStoriesView(path: $viewModel.path, viewModel: viewModel.fullStoriesViewModel)
         default:
             EmptyView()
         }

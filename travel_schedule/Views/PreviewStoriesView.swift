@@ -13,7 +13,7 @@ struct PreviewStoriesView: View {
     
     // MARK: - Public properties
     
-    @StateObject var viewModel: FullStoriesViewModel
+    @ObservedObject var viewModel: FullStoriesViewModel
     @Binding var path: NavigationPath
     
     // MARK: - Content
